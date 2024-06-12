@@ -2,19 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-// 3rd party files: 
+// internal variables 
 const {port, db, uri} = require("./private/config");
-const {post} = require("./models/postSchema");
-const {user} = require("./models/userSchema");
+const {user, post} = require("./models/schema");
 
-app.use(cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["content-type"]
-}));
+// app.use(cors({
+//     origin: "http://localhost:3000",
+//     methods: ["GET", "POST"],
+//     allowedHeaders: ["content-type"]
+// }));
 app.use(express.json());
 
-// handle with uuid
 app.get("/posts/:authorId", async (req,res)=>{
     try{
         const {authorId} = req.params;
@@ -30,6 +28,7 @@ app.get("/posts/:authorId", async (req,res)=>{
        }
 });
 
+// unknown?
 app.get("/posts", async (req,res)=>{
    try{
     const posts = await post.find({});
@@ -43,6 +42,7 @@ app.get("/posts", async (req,res)=>{
    }
 });
 
+// unknown?
 app.post("/posts",async (req,res)=>{
     try {
         if(!req.body.title || req.body.content){
@@ -57,7 +57,7 @@ app.post("/posts",async (req,res)=>{
     }
 });
 
-// check a user is present or not 
+// check a user is present or not || important**
 app.post("/login", async (req,res)=>{
     try {
         if(!req.body.email || req.body.password){
